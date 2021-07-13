@@ -267,87 +267,26 @@ $(document).ready(function () {
 
 
 <pre class="r"><code># Beer Study
-library(dlookr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dlookr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     transform</code></pre>
-<pre class="r"><code>library(visdat)
-library(plotly)</code></pre>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre><code>## 
-## Attaching package: &#39;plotly&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     last_plot</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     layout</code></pre>
-<pre class="r"><code>library(missRanger)
+library(dlookr)
+library(visdat)
+library(plotly)
+library(missRanger)
 library(ggplot2)
-library(magrittr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;magrittr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dlookr&#39;:
-## 
-##     extract</code></pre>
-<pre class="r"><code>library(ranger)
-library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(class)
-library(caret)</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre class="r"><code>library(e1071)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;e1071&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dlookr&#39;:
-## 
-##     kurtosis, skewness</code></pre>
-<pre class="r"><code>library(GGally)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
-##   method from   
-##   +.gg   ggplot2</code></pre>
-<pre class="r"><code>library(stringi)
+library(magrittr)
+library(ranger)
+library(dplyr)
+library(class)
+library(caret)
+library(e1071)
+library(GGally)
+library(stringi)
 library(stringr)
-library(xgboost)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;xgboost&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     slice</code></pre>
-<pre><code>## The following object is masked from &#39;package:plotly&#39;:
-## 
-##     slice</code></pre>
-<pre class="r"><code>library(car)</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre><code>## 
-## Attaching package: &#39;car&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     recode</code></pre>
-<pre class="r"><code>library(Matrix)
+library(xgboost)
+library(car)
+library(Matrix)
 library(keras)
-library(forecast)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
-##   method            from
-##   as.zoo.data.frame zoo</code></pre>
-<pre class="r"><code>library(neuralnet)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;neuralnet&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     compute</code></pre>
+library(forecast)
+library(neuralnet)</code></pre>
 <div id="this-is-to-add-in-all-of-the-librarys-we-are-using-for-the-code." class="section level1">
 <h1>This is to add in all of the librarys we are using for the code.</h1>
 <pre class="r"><code>Beers = read.csv(&#39;/Users/ZacharyHarris/Desktop/MS Data Science/MSDS_6306_Doing-Data-Science-Master/Unit 8 and 9 Case Study 1/Beers.csv&#39;)
@@ -421,13 +360,13 @@ JoinedData_Unclean = left_join(Beers2,Breweries,bu = c(&quot;Brewery_id&quot; = 
 <pre class="r"><code>head(JoinedData, 6)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Name.x"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Beer_ID"],"name":[2],"type":["int"],"align":["right"]},{"label":["ABV"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IBU"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Brewery_id"],"name":[5],"type":["int"],"align":["right"]},{"label":["Style"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Ounces"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Name.y"],"name":[8],"type":["chr"],"align":["left"]},{"label":["City"],"name":[9],"type":["chr"],"align":["left"]},{"label":["State"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"Pub Beer","2":"1436","3":"0.050","4":"38.0","5":"409","6":"American Pale Lager","7":"12","8":"10 Barrel Brewing Company","9":"Bend","10":"OR","_rn_":"1"},{"1":"Devil's Cup","2":"2265","3":"0.066","4":"55.6","5":"178","6":"American Pale Ale (APA)","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"2"},{"1":"Rise of the Phoenix","2":"2264","3":"0.071","4":"62.2","5":"178","6":"American IPA","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"3"},{"1":"Sinister","2":"2263","3":"0.090","4":"42.8","5":"178","6":"American Double / Imperial IPA","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"4"},{"1":"Sex and Candy","2":"2262","3":"0.075","4":"60.8","5":"178","6":"American IPA","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"5"},{"1":"Black Exodus","2":"2261","3":"0.077","4":"44.2","5":"178","6":"Oatmeal Stout","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Name.x"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Beer_ID"],"name":[2],"type":["int"],"align":["right"]},{"label":["ABV"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IBU"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Brewery_id"],"name":[5],"type":["int"],"align":["right"]},{"label":["Style"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Ounces"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Name.y"],"name":[8],"type":["chr"],"align":["left"]},{"label":["City"],"name":[9],"type":["chr"],"align":["left"]},{"label":["State"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"Pub Beer","2":"1436","3":"0.050","4":"47.0","5":"409","6":"American Pale Lager","7":"12","8":"10 Barrel Brewing Company","9":"Bend","10":"OR","_rn_":"1"},{"1":"Devil's Cup","2":"2265","3":"0.066","4":"44.0","5":"178","6":"American Pale Ale (APA)","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"2"},{"1":"Rise of the Phoenix","2":"2264","3":"0.071","4":"27.4","5":"178","6":"American IPA","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"3"},{"1":"Sinister","2":"2263","3":"0.090","4":"68.8","5":"178","6":"American Double / Imperial IPA","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"4"},{"1":"Sex and Candy","2":"2262","3":"0.075","4":"49.2","5":"178","6":"American IPA","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"5"},{"1":"Black Exodus","2":"2261","3":"0.077","4":"28.0","5":"178","6":"Oatmeal Stout","7":"12","8":"18th Street Brewery","9":"Gary","10":"IN","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>tail(JoinedData, 6)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Name.x"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Beer_ID"],"name":[2],"type":["int"],"align":["right"]},{"label":["ABV"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IBU"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Brewery_id"],"name":[5],"type":["int"],"align":["right"]},{"label":["Style"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Ounces"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Name.y"],"name":[8],"type":["chr"],"align":["left"]},{"label":["City"],"name":[9],"type":["chr"],"align":["left"]},{"label":["State"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"Rocky Mountain Oyster Stout","2":"1035","3":"0.075","4":"53.8","5":"425","6":"American Stout","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2405"},{"1":"Belgorado","2":"928","3":"0.067","4":"45.0","5":"425","6":"Belgian IPA","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2406"},{"1":"Rail Yard Ale","2":"807","3":"0.052","4":"30.0","5":"425","6":"American Amber / Red Ale","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2407"},{"1":"B3K Black Lager","2":"620","3":"0.055","4":"25.2","5":"425","6":"Schwarzbier","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2408"},{"1":"Silverback Pale Ale","2":"145","3":"0.055","4":"40.0","5":"425","6":"American Pale Ale (APA)","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2409"},{"1":"Rail Yard Ale (2009)","2":"84","3":"0.052","4":"40.0","5":"425","6":"American Amber / Red Ale","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2410"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Name.x"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Beer_ID"],"name":[2],"type":["int"],"align":["right"]},{"label":["ABV"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["IBU"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Brewery_id"],"name":[5],"type":["int"],"align":["right"]},{"label":["Style"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Ounces"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Name.y"],"name":[8],"type":["chr"],"align":["left"]},{"label":["City"],"name":[9],"type":["chr"],"align":["left"]},{"label":["State"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"Rocky Mountain Oyster Stout","2":"1035","3":"0.075","4":"27.0","5":"425","6":"American Stout","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2405"},{"1":"Belgorado","2":"928","3":"0.067","4":"45.0","5":"425","6":"Belgian IPA","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2406"},{"1":"Rail Yard Ale","2":"807","3":"0.052","4":"27.0","5":"425","6":"American Amber / Red Ale","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2407"},{"1":"B3K Black Lager","2":"620","3":"0.055","4":"21.6","5":"425","6":"Schwarzbier","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2408"},{"1":"Silverback Pale Ale","2":"145","3":"0.055","4":"40.0","5":"425","6":"American Pale Ale (APA)","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2409"},{"1":"Rail Yard Ale (2009)","2":"84","3":"0.052","4":"47.4","5":"425","6":"American Amber / Red Ale","7":"12","8":"Wynkoop Brewing Company","9":"Denver","10":"CO","_rn_":"2410"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>#plot_na_pareto(JoinedData, only_na = TRUE)
@@ -459,18 +398,18 @@ Medians %&gt;% ggplot(aes(x = median_ABV, fill = State)) + geom_histogram() #Plo
 <pre class="r"><code>summary(JoinedData) # Summary of Data</code></pre>
 <pre><code>## * Impute missing values based on Multivariate Imputation by Chained Equations
 ##  - method : mice
-##  - random seed : 18119
+##  - random seed : 68374
 ## 
 ## * Information of Imputation (before vs after)
 ##              Original   Imputation
 ## n        2.348000e+03 2.410000e+03
 ## na       6.200000e+01 0.000000e+00
-## mean     5.977342e-02 5.979004e-02
-## sd       1.354173e-02 1.341161e-02
-## se_mean  2.794636e-04 2.731948e-04
+## mean     5.977342e-02 5.977726e-02
+## sd       1.354173e-02 1.339723e-02
+## se_mean  2.794636e-04 2.729018e-04
 ## IQR      1.700000e-02 1.700000e-02
-## skewness 9.584771e-01 9.602696e-01
-## kurtosis 1.144937e+00 1.197340e+00
+## skewness 9.584771e-01 9.646093e-01
+## kurtosis 1.144937e+00 1.216499e+00
 ## p00      1.000000e-03 1.000000e-03
 ## p01      3.847000e-02 3.900000e-02
 ## p05      4.200000e-02 4.200000e-02
@@ -478,7 +417,7 @@ Medians %&gt;% ggplot(aes(x = median_ABV, fill = State)) + geom_histogram() #Plo
 ## p20      5.000000e-02 5.000000e-02
 ## p25      5.000000e-02 5.000000e-02
 ## p30      5.100000e-02 5.100000e-02
-## p40      5.400000e-02 5.400000e-02
+## p40      5.400000e-02 5.460000e-02
 ## p50      5.600000e-02 5.700000e-02
 ## p60      6.000000e-02 6.000000e-02
 ## p70      6.500000e-02 6.500000e-02
@@ -490,183 +429,172 @@ Medians %&gt;% ggplot(aes(x = median_ABV, fill = State)) + geom_histogram() #Plo
 ## p100     1.280000e-01 1.280000e-01
 ## * Impute missing values based on Multivariate Imputation by Chained Equations
 ##  - method : mice
-##  - random seed : 14880
+##  - random seed : 65993
 ## 
 ## * Information of Imputation (before vs after)
 ##              Original   Imputation
 ## n        1405.0000000 2410.0000000
 ## na       1005.0000000    0.0000000
-## mean       42.7131673   42.9940249
-## sd         25.9540659   21.1634835
-## se_mean     0.6924162    0.4311006
-## IQR        43.0000000   27.6000000
-## skewness    0.7925209    0.8416177
-## kurtosis   -0.1357120    0.8400375
+## mean       42.7131673   42.6302075
+## sd         25.9540659   21.2278970
+## se_mean     0.6924162    0.4324127
+## IQR        43.0000000   27.0000000
+## skewness    0.7925209    0.8801903
+## kurtosis   -0.1357120    0.8717980
 ## p00         4.0000000    4.0000000
 ## p01         7.0000000    8.0000000
 ## p05        11.0000000   15.0000000
 ## p10        15.0000000   18.0000000
 ## p20        20.0000000   24.0000000
-## p25        21.0000000   27.4000000
+## p25        21.0000000   27.0000000
 ## p30        24.0000000   30.0000000
-## p40        30.0000000   35.4000000
-## p50        35.0000000   40.2000000
+## p40        30.0000000   35.0000000
+## p50        35.0000000   40.0000000
 ## p60        44.0000000   45.0000000
-## p70        55.0000000   50.4600000
-## p75        64.0000000   55.0000000
+## p70        55.0000000   50.0000000
+## p75        64.0000000   54.0000000
 ## p80        68.0000000   60.0000000
 ## p90        80.0000000   70.0000000
 ## p95        92.0000000   85.0000000
 ## p99       110.9600000  102.8200000
 ## p100      138.0000000  138.0000000</code></pre>
-<pre><code>##     Name.x             Beer_ID       ABV.Original  ABV.Imputation
-##  Length:2410        Min.   :   1.0   2.348000e+03  2.410000e+03  
-##  Class :character   1st Qu.: 808.2   6.200000e+01  0.000000e+00  
-##  Mode  :character   Median :1453.5   5.977342e-02  5.979004e-02  
-##                     Mean   :1431.1   1.354173e-02  1.341161e-02  
-##                     3rd Qu.:2075.8   2.794636e-04  2.731948e-04  
-##                     Max.   :2692.0   1.700000e-02  1.700000e-02  
-##                                      9.584771e-01  9.602696e-01  
-##                                      1.144937e+00  1.197340e+00  
-##                                      1.000000e-03  1.000000e-03  
-##                                      3.847000e-02  3.900000e-02  
-##                                      4.200000e-02  4.200000e-02  
-##                                      4.500000e-02  4.590000e-02  
-##                                      5.000000e-02  5.000000e-02  
-##                                      5.000000e-02  5.000000e-02  
-##                                      5.100000e-02  5.100000e-02  
-##                                      5.400000e-02  5.400000e-02  
-##                                      5.600000e-02  5.700000e-02  
-##                                      6.000000e-02  6.000000e-02  
-##                                      6.500000e-02  6.500000e-02  
-##                                      6.700000e-02  6.700000e-02  
-##                                      7.000000e-02  7.000000e-02  
-##                                      8.000000e-02  8.000000e-02  
-##                                      8.700000e-02  8.700000e-02  
-##                                      9.900000e-02  9.900000e-02  
-##                                      1.280000e-01  1.280000e-01  
-##  IBU.Original  IBU.Imputation   Brewery_id       Style          
-##  1405.0000000  2410.0000000   Min.   :  1.0   Length:2410       
-##  1005.0000000     0.0000000   1st Qu.: 94.0   Class :character  
-##    42.7131673    42.9940249   Median :206.0   Mode  :character  
-##    25.9540659    21.1634835   Mean   :232.7                     
-##     0.6924162     0.4311006   3rd Qu.:367.0                     
-##    43.0000000    27.6000000   Max.   :558.0                     
-##     0.7925209     0.8416177                                     
-##    -0.1357120     0.8400375                                     
-##     4.0000000     4.0000000                                     
-##     7.0000000     8.0000000                                     
-##    11.0000000    15.0000000                                     
-##    15.0000000    18.0000000                                     
-##    20.0000000    24.0000000                                     
-##    21.0000000    27.4000000                                     
-##    24.0000000    30.0000000                                     
-##    30.0000000    35.4000000                                     
-##    35.0000000    40.2000000                                     
-##    44.0000000    45.0000000                                     
-##    55.0000000    50.4600000                                     
-##    64.0000000    55.0000000                                     
-##    68.0000000    60.0000000                                     
-##    80.0000000    70.0000000                                     
-##    92.0000000    85.0000000                                     
-##   110.9600000   102.8200000                                     
-##   138.0000000   138.0000000                                     
-##      Ounces         Name.y              City              State          
-##  Min.   : 8.40   Length:2410        Length:2410        Length:2410       
-##  1st Qu.:12.00   Class :character   Class :character   Class :character  
-##  Median :12.00   Mode  :character   Mode  :character   Mode  :character  
-##  Mean   :13.59                                                           
-##  3rd Qu.:16.00                                                           
-##  Max.   :32.00                                                           
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
-##                                                                          
+<pre><code>##     Name.x             Beer_ID       ABV.Original  ABV.Imputation IBU.Original  IBU.Imputation
+##  Length:2410        Min.   :   1.0   2.348000e+03  2.410000e+03   1405.0000000  2410.0000000  
+##  Class :character   1st Qu.: 808.2   6.200000e+01  0.000000e+00   1005.0000000     0.0000000  
+##  Mode  :character   Median :1453.5   5.977342e-02  5.977726e-02     42.7131673    42.6302075  
+##                     Mean   :1431.1   1.354173e-02  1.339723e-02     25.9540659    21.2278970  
+##                     3rd Qu.:2075.8   2.794636e-04  2.729018e-04      0.6924162     0.4324127  
+##                     Max.   :2692.0   1.700000e-02  1.700000e-02     43.0000000    27.0000000  
+##                                      9.584771e-01  9.646093e-01      0.7925209     0.8801903  
+##                                      1.144937e+00  1.216499e+00     -0.1357120     0.8717980  
+##                                      1.000000e-03  1.000000e-03      4.0000000     4.0000000  
+##                                      3.847000e-02  3.900000e-02      7.0000000     8.0000000  
+##                                      4.200000e-02  4.200000e-02     11.0000000    15.0000000  
+##                                      4.500000e-02  4.590000e-02     15.0000000    18.0000000  
+##                                      5.000000e-02  5.000000e-02     20.0000000    24.0000000  
+##                                      5.000000e-02  5.000000e-02     21.0000000    27.0000000  
+##                                      5.100000e-02  5.100000e-02     24.0000000    30.0000000  
+##                                      5.400000e-02  5.460000e-02     30.0000000    35.0000000  
+##                                      5.600000e-02  5.700000e-02     35.0000000    40.0000000  
+##                                      6.000000e-02  6.000000e-02     44.0000000    45.0000000  
+##                                      6.500000e-02  6.500000e-02     55.0000000    50.0000000  
+##                                      6.700000e-02  6.700000e-02     64.0000000    54.0000000  
+##                                      7.000000e-02  7.000000e-02     68.0000000    60.0000000  
+##                                      8.000000e-02  8.000000e-02     80.0000000    70.0000000  
+##                                      8.700000e-02  8.700000e-02     92.0000000    85.0000000  
+##                                      9.900000e-02  9.900000e-02    110.9600000   102.8200000  
+##                                      1.280000e-01  1.280000e-01    138.0000000   138.0000000  
+##    Brewery_id       Style               Ounces         Name.y              City          
+##  Min.   :  1.0   Length:2410        Min.   : 8.40   Length:2410        Length:2410       
+##  1st Qu.: 94.0   Class :character   1st Qu.:12.00   Class :character   Class :character  
+##  Median :206.0   Mode  :character   Median :12.00   Mode  :character   Mode  :character  
+##  Mean   :232.7                      Mean   :13.59                                        
+##  3rd Qu.:367.0                      3rd Qu.:16.00                                        
+##  Max.   :558.0                      Max.   :32.00                                        
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##                                                                                          
+##     State          
+##  Length:2410       
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
+##                    
 ## </code></pre>
 <pre class="r"><code>JoinedData %&gt;% ggplot(aes(x = ABV, y = IBU, color = State)) + geom_jitter() + geom_smooth() # Scatterplot</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : span too small. fewer data values than degrees of freedom.</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : pseudoinverse used at 0.039895</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : neighborhood radius 0.012105</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : reciprocal condition number 0</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : There are other near singularities as well. 8.2901e-05</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : Chernobyl! trL&gt;n 5
-
-## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : Chernobyl! trL&gt;n 5</code></pre>
-<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
-<pre><code>## Warning in predLoess(object$y, object$x, newx = if
-## (is.null(newdata)) object$x else if (is.data.frame(newdata))
-## as.matrix(model.frame(delete.response(terms(object)), : span too small. fewer
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : span too small. fewer
 ## data values than degrees of freedom.</code></pre>
-<pre><code>## Warning in predLoess(object$y, object$x, newx = if
-## (is.null(newdata)) object$x else if (is.data.frame(newdata))
-## as.matrix(model.frame(delete.response(terms(object)), : pseudoinverse used at
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : pseudoinverse used at
 ## 0.039895</code></pre>
-<pre><code>## Warning in predLoess(object$y, object$x, newx = if
-## (is.null(newdata)) object$x else if (is.data.frame(newdata))
-## as.matrix(model.frame(delete.response(terms(object)), : neighborhood radius
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : neighborhood radius
 ## 0.012105</code></pre>
-<pre><code>## Warning in predLoess(object$y, object$x, newx = if
-## (is.null(newdata)) object$x else if (is.data.frame(newdata))
-## as.matrix(model.frame(delete.response(terms(object)), : reciprocal condition
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : reciprocal condition
 ## number 0</code></pre>
-<pre><code>## Warning in predLoess(object$y, object$x, newx = if
-## (is.null(newdata)) object$x else if (is.data.frame(newdata))
-## as.matrix(model.frame(delete.response(terms(object)), : There are other near
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : There are other near
+## singularities as well. 8.2901e-05</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : Chernobyl! trL&gt;n 5
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : Chernobyl! trL&gt;n 5</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if
+## (is.data.frame(newdata)) as.matrix(model.frame(delete.response(terms(object)), : span too small. fewer
+## data values than degrees of freedom.</code></pre>
+<pre><code>## Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if
+## (is.data.frame(newdata)) as.matrix(model.frame(delete.response(terms(object)), : pseudoinverse used at
+## 0.039895</code></pre>
+<pre><code>## Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if
+## (is.data.frame(newdata)) as.matrix(model.frame(delete.response(terms(object)), : neighborhood radius
+## 0.012105</code></pre>
+<pre><code>## Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if
+## (is.data.frame(newdata)) as.matrix(model.frame(delete.response(terms(object)), : reciprocal condition
+## number 0</code></pre>
+<pre><code>## Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if
+## (is.data.frame(newdata)) as.matrix(model.frame(delete.response(terms(object)), : There are other near
 ## singularities as well. 8.2901e-05</code></pre>
 <pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : span too small. fewer data values than degrees of freedom.</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : at 0.054942</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : radius 3.364e-09</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : all data on boundary of neighborhood. make span bigger</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : pseudoinverse used at 0.054942</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : neighborhood radius 5.8e-05</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : reciprocal condition number 1</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : at 0.066658</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : radius 3.364e-09</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : all data on boundary of neighborhood. make span bigger</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : There are other near singularities as well. 3.364e-09</code></pre>
-<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : zero-width neighborhood. make span bigger
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : span too small. fewer
+## data values than degrees of freedom.</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : at 0.054974</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : radius 6.76e-10</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : all data on boundary of
+## neighborhood. make span bigger</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : pseudoinverse used at
+## 0.054974</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : neighborhood radius
+## 2.6e-05</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : reciprocal condition
+## number 1</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : at 0.060226</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : radius 6.76e-10</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : all data on boundary of
+## neighborhood. make span bigger</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : There are other near
+## singularities as well. 6.76e-10</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : zero-width neighborhood.
+## make span bigger
 
-## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
-## parametric, : zero-width neighborhood. make span bigger</code></pre>
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : zero-width neighborhood.
+## make span bigger</code></pre>
 <pre><code>## Warning: Computation failed in `stat_smooth()`:
 ## NA/NaN/Inf in foreign function call (arg 5)</code></pre>
-<pre><code>## Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) :
-## non-uniform &#39;Rounding&#39; sampler used</code></pre>
+<pre><code>## Warning in (function (kind = NULL, normal.kind = NULL, sample.kind = NULL) : non-uniform &#39;Rounding&#39;
+## sampler used</code></pre>
 <p><img src="Beer-Study_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre class="r"><code>JoinedData %&gt;% select(ABV,IBU) %&gt;% ggpairs() # Deriving Correlation</code></pre>
 <p><img src="Beer-Study_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
